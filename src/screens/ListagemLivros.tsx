@@ -7,10 +7,32 @@ import { ScrollView } from "react-native-gesture-handler";
 import HeadListagem from "../components/HeadListagem";
 
 
+interface Livro{
+    id: string;
+    titulo:string;
+    autor:string;
+    data_de_lancamento:string;
+    editora:string;
+    sinopse:string;
+    genero:string;
+    avaliacao:string;
+  
+}
 
+const renderItem = ({ item }: { item: Livro }) => (
+    <TouchableOpacity style={styles.item}>
+        <Text style={styles.textTitulo}>{item.titulo}</Text>
+        <Text style={styles.textAutor}>{item.autor}</Text>
+        <Text style={styles.textData}>{item.data_de_lancamento}</Text>
+        <Text style={styles.textEditora}>{item.editora}</Text>
+        <Text style={styles.textSinopse}>{item.sinopse}</Text>
+        <Text style={styles.textGenero}>{item.genero}</Text>
+        <Text style={styles.textAvaliacao}>{item.avaliacao}</Text>
+    </TouchableOpacity>    
+);
 
 function Listagem(): React.JSX.Element {
-    const [produto, setProduto] = useState<any[]>([]);
+    const [livro, setLivro] = useState<any[]>([]);
    
     const [erro, setErro] = useState<string>("");
 
@@ -18,8 +40,11 @@ function Listagem(): React.JSX.Element {
         async function fetchData() {
             try {
                 const response = await axios.get('http://10.137.11.219/api/livros/retornarTodos');
-                setProduto(response.data.dados);
-             } catch (error) {
+                setLivro(response.data.dados);
+                setLivro(response.data);
+
+                console.log(livro)
+            } catch (error) {
                 setErro("Ocorreu um erro");
                 console.log(error);
             }
@@ -27,18 +52,7 @@ function Listagem(): React.JSX.Element {
 
         fetchData();
     }, []);
-
-    const renderItem = ({ item }: { item: ListagemLivros }) => (
-        <TouchableOpacity style={styles.item}>
-            <Text style={styles.textTitulo}>{item.titulo}</Text>
-            <Text style={styles.textAutor}>{item.autor}</Text>
-            <Text style={styles.textData}>{item.data_lancamento}</Text>
-            <Text style={styles.textEditora}>{item.editora}</Text>
-            <Text style={styles.textSinopse}>{item.sinopse}</Text>
-            <Text style={styles.textGenero}>{item.genero}</Text>
-            <Text style={styles.textAvaliacao}>{item.avaliacao}</Text>
-        </TouchableOpacity>    
-    );
+    console.log(renderItem);
     
 
     return (
@@ -62,9 +76,10 @@ function Listagem(): React.JSX.Element {
 
             <FlatList style={styles.container}
                 showsVerticalScrollIndicator={false}
-                data={produto}
+                data={livro}
                 renderItem={renderItem}
-                keyExtractor={(item) => item.titulo.toString()}
+                keyExtractor={(item) => item.id ? item.id.toString() : Math.random().toString()}
+                contentContainerStyle={styles.menuList}
             />
             <Text style={styles.linhaTitle}>◎━━━━━━━━━━━━━━━━━◎.◈.◎━━━━━━━━━━━━━━━◎</Text>
 
@@ -188,6 +203,9 @@ const styles = StyleSheet.create({
         marginTop: -8,
         marginLeft: 'auto',
         marginRight: 'auto'
+    },
+    menuList: {
+        flexGrow: 1
     },
  });
  export default Listagem;

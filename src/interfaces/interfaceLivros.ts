@@ -9,3 +9,5 @@ interface ListagemLivros {
     avaliacao:string;
     image:any;
 };
+
+export default ListagemLivros;

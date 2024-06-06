@@ -1,18 +1,29 @@
+
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import {Image,StyleSheet,  TouchableOpacity, View } from "react-native";
 
 function  Footer(): React.JSX.Element{
+    const navigation = useNavigation();
     return(
         <View style={styles.footer}>
-   <TouchableOpacity >
+   <TouchableOpacity  >
   <Image source={require('../assets/images/usuarioicon.png')}style={styles.footerIcon}/>
    </TouchableOpacity >
-   <TouchableOpacity >
+
+   <TouchableOpacity onPress={()=>navigation.navigate('Cadastro')}  >
+  <Image source={require('../assets/images/escrever.png')}style={styles.footerIcon}/>
+   </TouchableOpacity >
+
+   <TouchableOpacity onPress={()=>navigation.navigate('Listagem')}>
    <Image source={require('../assets/images/livro.png')}style={styles.footerIcon}/>
    </TouchableOpacity>
-   <TouchableOpacity>
+
+   <TouchableOpacity onPress={()=>navigation.navigate('')}>
    <Image source={require('../assets/images/cesta.png')}style={styles.footerIcon}/>
    </TouchableOpacity>
+
+
         </View>
     );
 }
@@ -25,7 +36,7 @@ const styles= StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'flex-end',
-        marginTop: -5
+        marginTop: 50
     },
     footerIcon: {
         width: 40,

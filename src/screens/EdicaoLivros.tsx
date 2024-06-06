@@ -34,7 +34,7 @@ const EdicaoLivro: React.FC=()=>{
             <StatusBar backgroundColor="#000000" barStyle="light-content"/>
              
             <View style={styles.header}>
-            <Image source={require('../assets/images/capa.jpg')} style={styles.headerIcon} />
+            <Image source={require('../assets/images/Fundo.png')} style={styles.headerIcon} />
             </View>
 
              <View style={styles.form}>
